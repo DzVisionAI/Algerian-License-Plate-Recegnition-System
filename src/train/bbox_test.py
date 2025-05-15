@@ -8,7 +8,7 @@ boxes of the yolo formatt and see if it is correct
 
 # Read the bounding box coordinates from the text file
 with open(
-    "/home/bahaeddine09/Programming/License_rec/Detectionv1/Labels/valid/0_8.txt", "r"
+    "/home/c/Programming/License_rec/Detectionv1/Labels/valid/0_8.txt", "r"
 ) as file:
     data = file.readline().strip().split()
 
@@ -17,7 +17,7 @@ class_id, x_center, y_center, width, height = map(float, data)
 
 # Load the image
 image = cv2.imread(
-    "/home/bahaeddine09/Programming/License_rec/Detectionv1/Images/valid/0_8.jpg"
+    "/home/git@github.com:DzVisionAI/alpr_dz.git/Programming/License_rec/Detectionv1/Images/valid/0_8.jpg"
 )
 img_height, img_width = image.shape[:2]
 

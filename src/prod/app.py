@@ -10,18 +10,28 @@ from GeminiOcr import GeminiOCR
 from Utils import Utils
 from Filter import ImageProcessor, LicensePlateDetector
 import datetime
+from dotenv import load_dotenv
+import torch  # Add this import
+from ultralytics.nn.tasks import DetectionModel  # Add this import
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+load_dotenv()
+
+# Add ultralytics.nn.tasks.DetectionModel to PyTorch's safe globals
+# This is necessary for PyTorch 2.6+ due to weights_only=True default in torch.load
+
+
 
 async def main(video_path):
     # Initialize the OCR model
     ocr = GeminiOCR(api_key=os.environ["GEMINI_API_KEY"], model_name="gemini-1.5-pro")
+    torch.serialization.add_safe_globals([DetectionModel, torch.nn.modules.container.Sequential])
 
     # Initialize YOLO and license plate detector models
-    model = YOLO("../../models/yolov10n.pt")
+    model = YOLO("../../models/yolov10n.pt") # This line was causing the error
     lpdetector = LicensePlateDetector("../../models/best.pt")
 
     tracker = DeepSort(
